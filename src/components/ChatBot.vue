@@ -43,6 +43,7 @@
 
 <script>
 import axios from 'axios';
+import config from '../config/config';
 
 export default {
     name: 'ChatBot',
@@ -56,7 +57,7 @@ export default {
         }
     },
     created() {
-        axios.get('http://localhost:3300').then(response => {
+        axios.get(config.botUrl).then(response => {
             this.messages.push(formMessage(response.data.message, 'bot'));
         }).catch(err => console.log(err));
     },
@@ -65,10 +66,10 @@ export default {
             this.isLoading = true;
             this.message.toLowerCase().indexOf('bye') > -1 ? this.status = 'completed' : this.status = 'incomplete';
             this.messages.push(formMessage(this.message, 'client'));
-            axios.post('http://localhost:3300', {message: this.message, user: this.user}).then(response => {
+            axios.post(config.botUrl, {message: this.message, user: this.user}).then(response => {
                 this.messages.push(formMessage(response.data.message, 'bot'));
                 this.isLoading = false;
-                axios.post('http://localhost:3300/saveMessage', {history: this.messages, user: this.user, status: this.status}).then(response => console.log(response.data)).catch(err => console.log(err));
+                axios.post(`${config.botUrl}/saveMessage`, {history: this.messages, user: this.user, status: this.status}).then(response => console.log(response.data)).catch(err => console.log(err));
             }).catch(err => console.log(err));
             this.message = '';
         }
