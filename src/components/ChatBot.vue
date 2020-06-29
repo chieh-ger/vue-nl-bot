@@ -1,27 +1,29 @@
 <template>
-    <div class="row chatarea">
+    <div class="row chatarea mt-4">
         <div class="col-md-12 header">
             <img class="mx-auto d-block" src="https://finchatbot.com/wp-content/uploads/2017/06/logo.png" alt="finchatbot" width="30%">
         </div>
-        <div v-if="messages.length > 0" class="col-md-12">
-            <div v-for="(message, index) in messages" :key="index">
-                <div v-if="message.sender === 'bot'">
-                    <div class="row justify-content-start mt-3">
-                        <div class="col-1">
-                            <img src="https://s3-eu-west-1.amazonaws.com/finchatbot.com/logo-simple-mobile-version.png" alt="chatbot" width="100%">    
-                        </div>  
-                        <div class="col-auto message bot-message">
-                            {{ message.message }}
+        <div class="col-md-12 chatbg">
+            <div v-if="messages.length > 0" >
+                <div v-for="(message, index) in messages" :key="index">
+                    <div v-if="message.sender === 'bot'">
+                        <div class="row justify-content-start mt-3">
+                            <div class="col-1">
+                                <img src="https://s3-eu-west-1.amazonaws.com/finchatbot.com/logo-simple-mobile-version.png" alt="chatbot" width="100%">    
+                            </div>  
+                            <div class="col-auto message bot-message">
+                                {{ message.message }}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div v-else>
-                    <div class="row justify-content-end mt-3">
-                        <div class="col-auto message user-message">
-                            {{ message.message }}
-                        </div>
-                        <div class="col-1">
-                            <img src="https://i7.pngguru.com/preview/555/557/138/computer-icons-user-profile-woman-avatar-rent-thumbnail.jpg" alt="user" width="100%">
+                    <div v-else>
+                        <div class="row justify-content-end mt-3">
+                            <div class="col-auto message user-message">
+                                {{ message.message }}
+                            </div>
+                            <div class="col-1">
+                                <img src="https://i7.pngguru.com/preview/555/557/138/computer-icons-user-profile-woman-avatar-rent-thumbnail.jpg" alt="user" width="100%">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -33,7 +35,7 @@
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" v-model="message" @keyup.enter="sendMessage">
                     <div class="input-group-append">
-                        <button :disabled="message ? false : true" @click="sendMessage" class="btn btn-outline-secondary" type="button">Send</button>
+                        <button :disabled="message ? false : true" @click="sendMessage" class="btn btn-outline-secondary sendBtn" type="button">Send</button>
                     </div>
                 </div>
             </div>
@@ -87,10 +89,20 @@ const formMessage = (message, sender) => {
 <style scoped>
     .header {
         padding: 30px;
+        background: #00b6ff;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .chatbg {
+        background: #fdfdfd;
     }
     .chatarea {
         border: 1px solid #ddd;
         border-radius: 10px;
+    }
+    .sendBtn {
+        background: #04a7e0;
+        color: #fff;
     }
     .message {
         display: inline-block;
